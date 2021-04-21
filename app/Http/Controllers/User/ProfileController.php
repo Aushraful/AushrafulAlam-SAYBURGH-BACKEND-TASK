@@ -14,11 +14,10 @@ class ProfileController extends Controller
 
     public function __invoke(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user()->with('posts')->first();
 
         return response()->json([
-            'name'      => $user->name,
-            'email'     => $user->email
+            'user'      => $user,
         ], 200);
     }
 }

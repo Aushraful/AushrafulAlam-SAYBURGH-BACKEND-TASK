@@ -8,6 +8,7 @@ use \App\Http\Controllers\Auth\SignInController;
 use \App\Http\Controllers\Auth\SignOutController;
 use \App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Comment\CommentController;
 
 
 Route::group(['prefix'=>'auth'], function (){
@@ -18,5 +19,10 @@ Route::group(['prefix'=>'auth'], function (){
 
 Route::get('profile', ProfileController::class);
 
-Route::apiResource('posts', PostController::class); // On class middleware is placed with except('index','show')
+Route::apiResource('posts', PostController::class); // On class __construct() middleware is placed with except('index','show')
+
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::post('comment', CommentController::class); // has a __invoke() insted of store(); so mentioning method is not required;
+});
+
 

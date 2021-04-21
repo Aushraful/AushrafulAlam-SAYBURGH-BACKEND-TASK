@@ -19,7 +19,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::all();
+        return Post::withCount('comments')->get();
     }
 
     public function store(PostRequest $postRequest)
@@ -47,7 +47,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return $post;
+        return $post->with('comments')->first();
         // return new PostResource($post);
     }
 
